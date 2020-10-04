@@ -30,7 +30,7 @@ chart = alt.Chart(rats_url).mark_rect(opacity=0.05).encode(
 st.write(chart)
 
 chart = alt.Chart(rats_url).mark_line().encode(
-        x="created_date:O",
+        x="created_date:T",
         y="count(created_date):Q"
 )
 
