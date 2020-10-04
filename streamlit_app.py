@@ -12,13 +12,14 @@ geojson = alt.Data(url=geojson_url, format=alt.DataFormat(property='features', t
 
 rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
 
-gm = alt.Chart(geojson).mark_geoshape(fill="none", stroke="black", strokeWidth=0.05)
+gm = alt.Chart(geojson, width=800, height=800).mark_geoshape(fill="none", stroke="black", strokeWidth=0.05)
 
-map = alt.Chart(rats_url).mark_circle(size=3.0, opacity=0.05).encode(
+map = alt.Chart(rats_url).mark_circle(size=10, opacity=0.05).encode(
         longitude="Longitude:Q",
         latitude="Latitude:Q",
         color="Borough:N"
 ).transform_filter("datum.Longitude > -75")
+
 st.write(gm + map)
 
 
@@ -28,10 +29,10 @@ chart = alt.Chart(rats_url).mark_bar().encode(
 )
 st.write(chart)
 
-chart = alt.Chart(rats_url).mark_rect(opacity=0.05).encode(
+chart = alt.Chart(rats_url).mark_rect(opacity=0.025).encode(
         x="Borough:N",
         y="Status:N"
-)
+        )
 st.write(chart)
 
 chart = alt.Chart(rats_url).mark_line().encode(
@@ -41,4 +42,11 @@ chart = alt.Chart(rats_url).mark_line().encode(
             aggregate="count",
             timeUnit="year")
 )
+st.write(chart)
+
+chart = alt.Chart(rats_url).mark_rect(opacity=0.25).encode(
+        x=alt.X("Created Date:T", timeUnit="hours"),
+        y="Borough:N"
+)
+
 st.write(chart)
