@@ -1,7 +1,7 @@
 # CMU Interactive Data Science Assigment 3
 
 * **Team members**: Connie Ye and Lukas Hermann
-* **andrewIds**: constany and lhermann 
+* **andrewIDs**: constany and lhermann 
 * **Online URL**: https://s4a.streamlit.io/cmu-ids-2020/a3-puppy-patrol/master/streamlit_app.py/
 
 ## Instructions
