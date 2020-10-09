@@ -9,50 +9,36 @@ st.title("""
 
 # Using URLs for df > 5k rows
 
-geojson_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/2010_Census_Blocks.geojson" 
-geojson = alt.Data(url=geojson_url, format=alt.DataFormat(property='features', type='json'))
-
 rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
+df = pd.read_csv("rats.csv")
 
-
-gm = alt.Chart(geojson, width=800, height=800).mark_geoshape(
-        fill="none",
-        stroke="black",
-        strokeWidth=0.05)
-
-map = alt.Chart(rats_url).mark_circle(size=10, opacity=0.05).encode(
-        longitude="Longitude:Q",
-        latitude="Latitude:Q",
-        color="Borough:N"
-).transform_filter("datum.Longitude > -75")
-
-st.write(gm + map)
+st.map(df) 
 
 
 chart = alt.Chart(rats_url).mark_bar().encode(
-        x="Borough:N",
-        y="count(Borough):Q"
+        x="borough:N",
+        y="count(borough):Q"
 )
 st.write(chart)
 
 chart = alt.Chart(rats_url).mark_rect(opacity=0.025).encode(
-        x="Borough:N",
-        y="Status:N"
+        x="borough:N",
+        y="status:N"
         )
 st.write(chart)
 
 chart = alt.Chart(rats_url).mark_line().encode(
-        x=alt.X("Created Date:T",
+        x=alt.X("created_date:T",
             timeUnit="year"),
-        y=alt.Y("Created Date:T",
+        y=alt.Y("created_date:T",
             aggregate="count",
             timeUnit="year")
 )
 st.write(chart)
 
 chart = alt.Chart(rats_url).mark_rect(opacity=0.25).encode(
-        x=alt.X("Created Date:T", timeUnit="hours"),
-        y="Borough:N"
+        x=alt.X("created_date:T", timeUnit="hours"),
+        y="borough:N"
 )
 
 st.write(chart)
