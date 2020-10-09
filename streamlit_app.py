@@ -23,6 +23,13 @@ chart = alt.Chart(rats_url).mark_line().encode(
 ).properties(width=700)
 st.write(chart)
 
+st.write("Lets look at the number of days a request is open")
+open_mean = df.groupby(['borough'])['days_open'].mean().reset_index()
+chart = alt.Chart(open_mean).mark_bar().encode(
+        x="days_open:Q",
+        y="borough:N"
+).transform_filter("datum.borough !== 'Unspecified'")
+st.write(chart)
 
 chart = alt.Chart(rats_url).mark_bar().encode(
         x="borough:N",
