@@ -21,19 +21,24 @@ rats_url = (
 
 
 df = pd.read_csv("rats.csv")
-df = df[df["longitude"] > -75]
-years = df["created_date"].apply(lambda x: x[6:10]).unique()
-years = [int(year) for year in years]
+years = list(df['created_date']
+        .apply(lambda d: datetime.fromisoformat(d).year))
 min_year = min(years)
 max_year = max(years)
-select_year = st.slider("Year", min_year, max_year)
+select_year = st.slider("Select Year", min_year, max_year)
 
-st.write()
+df_seldate = (df['created_date']
+        .apply(lambda x: datetime.fromisoformat(x).year == select_year))
+st.map(df[df_seldate])
 
-st.map(df[df["created_date"].apply(lambda x: int(x[6:10])) == select_year])
+boroughs = list(df['borough'].unique())
+boroughs.append('ALL')
+boroughs.reverse()
+borough = st.radio("Select Borough", boroughs)
+df_borough = df if borough == "ALL" else df[df['borough'] == borough]
 
 chart = (
-    alt.Chart(rats_url)
+    alt.Chart(df_borough)
     .mark_line()
     .encode(
         x=alt.X("created_date:T", timeUnit="year", title="Complaint Creation Date"),
@@ -44,20 +49,27 @@ chart = (
 st.write(chart)
 
 
+
 st.write("Lets look at the number of days a request is open")
-open_mean = df.groupby(["borough"])["days_open"].mean().reset_index()
-chart = (
-    alt.Chart(open_mean)
-    .mark_bar()
-    .encode(x="days_open:Q", y="borough:N")
-    .transform_filter("datum.borough !== 'Unspecified'")
-)
-st.write(chart)
 
 chart = alt.Chart(rats_url).mark_bar().encode(x="borough:N", y="count(borough):Q")
 st.write(chart)
 
-chart = alt.Chart(rats_url).mark_rect(opacity=0.025).encode(x="borough:N", y="status:N")
+st.write("We can also see that the data suggests Staten Island takes longer on average to close the requests.")
+
+open_mean = df.groupby(["borough"])["days_open"].mean().reset_index()
+chart = (
+    alt.Chart(open_mean)
+    .mark_bar()
+    .encode(x=alt.X("days_open:Q", title="Days Until Request Closed (Avg)"), y=alt.Y("borough:N", title="Borough"))
+    .transform_filter("datum.borough !== 'Unspecified'")
+)
+st.write(chart)
+
+chart = (alt.Chart(rats_url)
+            .mark_rect(opacity=0.025)
+            .encode(x="borough:N", y="status:N")
+            .transform_filter('datum.created_date !== "NaN"'))
 st.write(chart)
 
 chart = (
