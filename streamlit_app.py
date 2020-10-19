@@ -1,58 +1,56 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+from datetime import datetime
+from streamlit_observable import observable
 
-st.title("""
-        # Aww Rats!🐀
-        An exploration of rat sightings in New York City, courtesy of [NYC Open Data](https://data.cityofnewyork.us/Social-Services/Rat-Sightings/3q43-55fe).
-        """)
+st.markdown(
+    """
+        <h1 style="font-family: serif;">Aww Rats!🐀</h1>
+        <h2 style="font-family: serif;"> Who Runs New York?</h2>
+        """,
+    unsafe_allow_html=True,
+)
+st.write(
+    """
+        Rats are as synonymous with New York City as trains, the Empire State Building, and expensive apartments. There is even a [Wikipedia page dedicated to Rats in New York City](https://en.wikipedia.org/wiki/Rats_in_New_York_City). While cute and furry creatures, rats are also disease vectors (not that we need more of those right now). The City even went so far as to make a [$32 million plan](https://www.nytimes.com/2017/07/12/nyregion/new-york-city-rat-problem.html) to control the rodent problem.
+        According to [NYC Open Data](https://data.cityofnewyork.us/Social-Services/Rat-Sightings/3q43-55fe) the number of reports of rat sightings has been on an upward trend.
+        """
+)
 
 # Using URLs for df > 5k rows
-
-geojson_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/2010_Census_Blocks.geojson" 
-geojson = alt.Data(url=geojson_url, format=alt.DataFormat(property='features', type='json'))
-
-rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
-
-
-gm = alt.Chart(geojson, width=800, height=800).mark_geoshape(
-        fill="none",
-        stroke="black",
-        strokeWidth=0.05)
-
-map = alt.Chart(rats_url).mark_circle(size=10, opacity=0.05).encode(
-        longitude="Longitude:Q",
-        latitude="Latitude:Q",
-        color="Borough:N"
-).transform_filter("datum.Longitude > -75")
-
-st.write(gm + map)
-
-
-chart = alt.Chart(rats_url).mark_bar().encode(
-        x="Borough:N",
-        y="count(Borough):Q"
+rats_url = (
+    "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
 )
-st.write(chart)
 
-chart = alt.Chart(rats_url).mark_rect(opacity=0.025).encode(
-        x="Borough:N",
-        y="Status:N"
-        )
-st.write(chart)
 
-chart = alt.Chart(rats_url).mark_line().encode(
-        x=alt.X("Created Date:T",
-            timeUnit="year"),
-        y=alt.Y("Created Date:T",
-            aggregate="count",
-            timeUnit="year")
-)
-st.write(chart)
+df = pd.read_csv("rats.csv")
+boroughs = list(df["borough"].unique())
+boroughs.append("ALL")
+boroughs.reverse()
+borough = st.radio("Select Borough", boroughs)
+df_borough = df if borough == "ALL" else df[df["borough"] == borough]
 
-chart = alt.Chart(rats_url).mark_rect(opacity=0.25).encode(
-        x=alt.X("Created Date:T", timeUnit="hours"),
-        y="Borough:N"
+chart = (
+    alt.Chart(df_borough)
+    .mark_line()
+    .encode(
+        x=alt.X("created_date:T", timeUnit="year", title="Complaint Creation Date"),
+        y=alt.Y("count(unique_key):Q", title="Count of Complaints"),
+    )
+    .properties(width=700)
 )
 
 st.write(chart)
+
+years = list(df["created_date"].apply(lambda d: datetime.fromisoformat(d).year))
+min_year = min(years)
+max_year = max(years)
+select_year = st.slider("Select Year", min_year, max_year)
+
+observable(
+    key="Rat Sightings in NYC",
+    notebook="@lsh/rat-sightings-nyc",
+    targets=["map"],
+    redefine={"year": select_year},
+)
