@@ -22,6 +22,7 @@ st.write(
 rats_url = (
     "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
 )
+budget_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/nycdoh_budget.csv"
 
 
 df = pd.read_csv("rats.csv")
@@ -54,10 +55,8 @@ df_year_bool = df["created_date"].apply(
 df_year = df[df_year_bool]
 
 vs = pdk.ViewState(
-        latitude=df['latitude'].mean(),
-        longitude=df['longitude'].mean(),
-        zoom=10
-        )
+    latitude=df["latitude"].mean(), longitude=df["longitude"].mean(), zoom=10
+)
 
 layer = pdk.Layer(
     "ScatterplotLayer",
@@ -73,3 +72,54 @@ layer = pdk.Layer(
 
 st.write(pdk.Deck(layers=[layer], initial_view_state=vs))
 
+df_budget_raw = pd.read_csv(budget_url)
+df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
+df_budget["year"] = df_budget["Fiscal Year"].apply(lambda d: f"{d}-01-01")
+chw = 275
+
+chart = (
+    alt.Chart(df_budget, title="Total Budget Trends")
+    .mark_line()
+    .encode(
+        x="year:T", y=alt.Y("Current Modified Budget Amount:Q", title="Fiscal Year")
+    )
+    .properties(width=chw)
+)
+
+dfb_bool = df_budget_raw["Budget Code Name"].apply(lambda d: "Pest" in d)
+dfb = df_budget_raw[dfb_bool].groupby("Fiscal Year").mean().reset_index()
+dfb["year"] = dfb["Fiscal Year"].apply(lambda d: f"{d}-01-01")
+
+chart2 = (
+    alt.Chart(dfb, title="Pest Control Budget Trends")
+    .mark_line()
+    .encode(
+        x="year:T", y=alt.Y("Current Modified Budget Amount:Q", title="Fiscal Year")
+    )
+    .properties(width=chw)
+)
+
+st.write(chart | chart2)
+
+chart2 = (
+    alt.Chart(dfb)
+    .mark_line()
+    .encode(
+        x="year:T", y=alt.Y("Current Modified Budget Amount:Q", title="Fiscal Year")
+    )
+    .properties(width=700)
+)
+
+dfs_bool = df_budget_raw["Budget Code Name"].apply(lambda d: "Sanitation" in d)
+dfs = df_budget_raw[dfs_bool].groupby("Fiscal Year").mean().reset_index()
+dfs["year"] = dfs["Fiscal Year"].apply(lambda d: f"{d}-01-01")
+
+chart = (
+    alt.Chart(dfs, title="Sanitation vs Pest Control Budget")
+    .mark_line(stroke="crimson")
+    .encode(
+        x="year:T", y=alt.Y("Current Modified Budget Amount:Q", title="Fiscal Year")
+    )
+)
+
+st.write(chart + chart2)
