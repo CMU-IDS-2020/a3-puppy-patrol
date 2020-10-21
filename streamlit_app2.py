@@ -3,6 +3,9 @@ import pandas as pd
 import altair as alt
 import re
 import numpy as np
+import streamlit.components.v1 as components
+
+components.iframe("https://connie.dog/rat-image-tsne/", width=700, height=1000)
 
 st.write('<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
