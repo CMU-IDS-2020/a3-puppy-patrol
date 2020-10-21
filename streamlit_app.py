@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import pydeck as pdk
 from datetime import datetime
-from streamlit_observable import observable
 
 st.markdown(
     """
@@ -25,6 +25,7 @@ rats_url = (
 
 
 df = pd.read_csv("rats.csv")
+
 boroughs = list(df["borough"].unique())
 boroughs.append("ALL")
 boroughs.reverse()
@@ -47,10 +48,28 @@ years = list(df["created_date"].apply(lambda d: datetime.fromisoformat(d).year))
 min_year = min(years)
 max_year = max(years)
 select_year = st.slider("Select Year", min_year, max_year)
-
-observable(
-    key="Rat Sightings in NYC",
-    notebook="@lsh/rat-sightings-nyc",
-    targets=["map"],
-    redefine={"year": select_year},
+df_year_bool = df["created_date"].apply(
+    lambda d: datetime.fromisoformat(d).year == select_year
 )
+df_year = df[df_year_bool]
+
+vs = pdk.ViewState(
+        latitude=df['latitude'].mean(),
+        longitude=df['longitude'].mean(),
+        zoom=10
+        )
+
+layer = pdk.Layer(
+    "ScatterplotLayer",
+    df_year[["latitude", "longitude"]],
+    get_position=["longitude", "latitude"],
+    auto_highlight=True,
+    pickable=True,
+    get_radius=100,
+    get_fill_color=[255, 0, 0],
+    opacity=0.05,
+    filled=True,
+)
+
+st.write(pdk.Deck(layers=[layer], initial_view_state=vs))
+
