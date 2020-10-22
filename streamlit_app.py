@@ -206,7 +206,7 @@ md = reload()
 st.markdown(md, unsafe_allow_html=True)
 
 # Using URLs for df > 5k rows
-rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rat_activity.csv"
+rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
 budget_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/nycdoh_budget.csv"
 sightings_url = (
     "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
@@ -220,10 +220,11 @@ nyc_geojson = alt.Data(
 df = pd.read_csv(rats_url)
 
 boroughs = list(df["borough"].unique())
+boroughs = [d.title() for d in boroughs if d.lower() != "unspecified"] 
 boroughs.append("All")
 boroughs.reverse()
 borough = st.radio("Select Borough", boroughs)
-df_borough = df if borough == "All" else df[df["borough"] == borough]
+df_borough = df if borough == "All" else df[df["borough"].apply(lambda d: d.title()) == borough]
 
 brush = alt.selection(type="interval", encodings=["x"])
 
@@ -231,8 +232,8 @@ chart = (
     alt.Chart(df_borough)
     .mark_line()
     .encode(
-        x=alt.X("inspection_date:T", timeUnit="year", title="Inspection Date"),
-        y=alt.Y("count(unique_key):Q", title="Count of Inspections"),
+        x=alt.X("created_date:T", timeUnit="year", title="Sighting Report Date"),
+        y=alt.Y("count(created_date):Q", title="Count of Sightings"),
     )
     .properties(width=640, height=200)
 ).add_selection(brush)
