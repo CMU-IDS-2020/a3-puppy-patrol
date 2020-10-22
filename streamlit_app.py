@@ -212,8 +212,9 @@ sightings_url = (
     "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
 )
 
-nyc_geojson_url = (
-    "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/2010_Census_Blocks.geojson"
+nyc_geojson_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/2010_Census_Blocks.geojson"
+nyc_geojson = alt.Data(
+    url=nyc_geojson_url, format=alt.DataFormat(property="features", type="json")
 )
 
 df = pd.read_csv(rats_url)
@@ -224,7 +225,7 @@ boroughs.reverse()
 borough = st.radio("Select Borough", boroughs)
 df_borough = df if borough == "All" else df[df["borough"] == borough]
 
-brush = alt.selection(type='interval', encodings=['x'])
+brush = alt.selection(type="interval", encodings=["x"])
 
 chart = (
     alt.Chart(df_borough)
@@ -233,18 +234,20 @@ chart = (
         x=alt.X("inspection_date:T", timeUnit="year", title="Inspection Date"),
         y=alt.Y("count(unique_key):Q", title="Count of Inspections"),
     )
-    .properties(width=700, height = 200)
+    .properties(width=700, height=200)
 ).add_selection(brush)
 
 chart2 = (
-        alt.Chart(df_borough).mark_circle(opacity=0.005)
-        .encode(
-            longitude="longitude",
-            latitude="latitude"
-            ).properties(width=700, height=500).transform_filter(brush)
-        )
+    alt.Chart(df_borough)
+    .mark_circle(opacity=0.005)
+    .encode(longitude="longitude", latitude="latitude")
+    .properties(width=700, height=500)
+    .transform_filter(brush)
+)
 
-st.write(chart & chart2)
+map_bg = alt.Chart(nyc_geojson).mark_geoshape().encode()
+
+st.write(chart & (map_bg + chart2))
 
 
 df_budget_raw = pd.read_csv(budget_url)
