@@ -206,7 +206,9 @@ md = reload()
 st.markdown(md, unsafe_allow_html=True)
 
 # Using URLs for df > 5k rows
-rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
+rats_url = (
+    "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
+)
 budget_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/nycdoh_budget.csv"
 sightings_url = (
     "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
@@ -220,11 +222,13 @@ nyc_geojson = alt.Data(
 df = pd.read_csv(rats_url)
 
 boroughs = list(df["borough"].unique())
-boroughs = [d.title() for d in boroughs if d.lower() != "unspecified"] 
+boroughs = [d.title() for d in boroughs if d.lower() != "unspecified"]
 boroughs.append("All")
 boroughs.reverse()
 borough = st.radio("Select Borough", boroughs)
-df_borough = df if borough == "All" else df[df["borough"].apply(lambda d: d.title()) == borough]
+df_borough = (
+    df if borough == "All" else df[df["borough"].apply(lambda d: d.title()) == borough]
+)
 
 brush = alt.selection(type="interval", encodings=["x"])
 
