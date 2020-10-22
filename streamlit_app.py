@@ -245,7 +245,7 @@ chart2 = (
     .transform_filter(brush)
 )
 
-map_bg = alt.Chart(nyc_geojson).mark_geoshape().encode()
+map_bg = alt.Chart(nyc_geojson).mark_geoshape(fill="none", stroke="#ccc", strokeWidth=0.1).encode()
 
 st.write(chart & (map_bg + chart2))
 
