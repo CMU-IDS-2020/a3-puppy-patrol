@@ -208,54 +208,44 @@ st.markdown(md, unsafe_allow_html=True)
 # Using URLs for df > 5k rows
 rats_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rat_activity.csv"
 budget_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/nycdoh_budget.csv"
+sightings_url = (
+    "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
+)
 
+nyc_geojson_url = (
+    "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/2010_Census_Blocks.geojson"
+)
 
 df = pd.read_csv(rats_url)
 
 boroughs = list(df["borough"].unique())
-boroughs.append("ALL")
+boroughs.append("All")
 boroughs.reverse()
 borough = st.radio("Select Borough", boroughs)
-df_borough = df if borough == "ALL" else df[df["borough"] == borough]
+df_borough = df if borough == "All" else df[df["borough"] == borough]
+
+brush = alt.selection(type='interval', encodings=['x'])
 
 chart = (
     alt.Chart(df_borough)
     .mark_line()
     .encode(
-        x=alt.X("inspection_date:T", timeUnit="year", title="Complaint Creation Date"),
-        y=alt.Y("count(unique_key):Q", title="Count of Complaints"),
+        x=alt.X("inspection_date:T", timeUnit="year", title="Inspection Date"),
+        y=alt.Y("count(unique_key):Q", title="Count of Inspections"),
     )
-    .properties(width=700)
-)
+    .properties(width=700, height = 200)
+).add_selection(brush)
 
-st.write(chart)
+chart2 = (
+        alt.Chart(df_borough).mark_circle(opacity=0.005)
+        .encode(
+            longitude="longitude",
+            latitude="latitude"
+            ).properties(width=700, height=500).transform_filter(brush)
+        )
 
-years = list(df["inspection_date"].apply(lambda d: datetime.fromisoformat(d).year))
-min_year = min(years)
-max_year = max(years)
-select_year = st.slider("Select Year", min_year, max_year)
-df_year_bool = df["inspection_date"].apply(
-    lambda d: datetime.fromisoformat(d).year == select_year
-)
-df_year = df[df_year_bool]
+st.write(chart & chart2)
 
-vs = pdk.ViewState(
-    latitude=df["latitude"].mean(), longitude=df["longitude"].mean(), zoom=10
-)
-
-layer = pdk.Layer(
-    "ScatterplotLayer",
-    df_year[["latitude", "longitude"]],
-    get_position=["longitude", "latitude"],
-    auto_highlight=True,
-    pickable=True,
-    get_radius=100,
-    get_fill_color=[255, 0, 0],
-    opacity=0.05,
-    filled=True,
-)
-
-st.write(pdk.Deck(layers=[layer], initial_view_state=vs))
 
 df_budget_raw = pd.read_csv(budget_url)
 df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
