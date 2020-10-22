@@ -234,18 +234,22 @@ chart = (
         x=alt.X("inspection_date:T", timeUnit="year", title="Inspection Date"),
         y=alt.Y("count(unique_key):Q", title="Count of Inspections"),
     )
-    .properties(width=700, height=200)
+    .properties(width=640, height=200)
 ).add_selection(brush)
 
 chart2 = (
     alt.Chart(df_borough)
     .mark_circle(opacity=0.005)
     .encode(longitude="longitude", latitude="latitude")
-    .properties(width=700, height=500)
+    .properties(width=640, height=500)
     .transform_filter(brush)
 )
 
-map_bg = alt.Chart(nyc_geojson).mark_geoshape(fill="none", stroke="#ccc", strokeWidth=0.1).encode()
+map_bg = (
+    alt.Chart(nyc_geojson)
+    .mark_geoshape(fill="none", stroke="#ccc", strokeWidth=0.1)
+    .encode()
+)
 
 st.write(chart & (map_bg + chart2))
 
