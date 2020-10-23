@@ -483,7 +483,7 @@ Mayors will often wage a “war on rats” and occasionally enact more drastic p
 """
 )
 
-instruction("Hover over a dot to see the policy and it's description!")
+instructions("Hover over a dot to see the policy and it's description!")
 
 st.write(
     """
