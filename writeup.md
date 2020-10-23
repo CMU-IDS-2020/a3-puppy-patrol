@@ -2,7 +2,7 @@
 
 # Aww Rats!🐀
 
-![screenshot.png](screenshot.gif)
+![screenshot.png](writeup_assets/screenshot.gif)
 
 New York has a unique relationship with rats. Rodents have become a symbol of the city as much as the Empire State Building or the Status of Liberty. Part of this association is due to New York's very real rodent problem. In this application, we explore data from a variety of sources, including NYC Open Data, Wikipedia, and Reddit to get a better understanding New York's unique relationship with rats, and what they are doing about it.
 
