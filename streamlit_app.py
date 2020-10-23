@@ -11,7 +11,7 @@ font_fam = "Merriweather"
 font_accent_color = "#175BC2"
 
 st.write(
-    """<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>""",
+   "<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>",
     unsafe_allow_html=True,
 )
 
@@ -65,14 +65,10 @@ h2("About NYC rats")
 
 st.write(
     """
-The city’s rat population is dominated by the brown rat, also known as the Norway rat, the sewer rat, and the alley rat. The species is believed to have originated in East Asia, eventually migrating to Europe. The rats we see around the city today are descendants of those that came from Western Europe in the 1700s. Once the Norway rats arrived in NYC, they quickly killed off the smaller roof rats that inhabited the city, and they’ve continued thriving to this day. 
-
 Rats are nocturnal and usually stay within 450 feet of their burrows, which are often in apartment floorboards, alleyways, vegetation, sidewalks or basements. Rats tend to look for places that provide them with food, water, shelter and safe ways for them to get around. 
 
 They live in colonies of around 40–50 members and can be seen travelling in herds, passing
 down successful feeding paths to younger generations. Solitary rats, especially those found during the day, have often been displaced from their burrows.
-
-Rats are athletes and survivors! The adult rat can squeeze through holes or gaps 1 inch wide, jump a horizontal distance of up to 4 feet, survive a fall from a height of almost 40 feet, and tread water for three days.
 
 Like humans, NYC rats are highly intelligent, have daily routines, communicate with one another, and have their own social order. 
 
