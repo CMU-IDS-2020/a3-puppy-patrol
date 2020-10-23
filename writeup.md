@@ -1,5 +1,3 @@
-# A3
-
 # Aww Rats!🐀
 
 ![screenshot.png](writeup_assets/screenshot.gif)
