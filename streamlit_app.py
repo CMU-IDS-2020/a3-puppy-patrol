@@ -7,17 +7,53 @@ import streamlit as st
 from datetime import datetime
 import streamlit.components.v1 as components
 
+font_fam = "serif"
+
+
+def h2(s: str):
+    st.markdown(
+        f"""
+    <h2 style="font-family: {font_fam};">{s.title()}</h2>
+    """,
+        unsafe_allow_html=True,
+    )
+
+
 st.markdown(
-    """
-        <h1 style="font-family: serif;">Aww Rats!🐀</h1>
-        <h2 style="font-family: serif;"> Who Runs New York?</h2>
+    f"""
+        <h1 style="font-family: {font_fam};">Aww Rats!🐀</h1>
         """,
     unsafe_allow_html=True,
 )
 st.write(
+    f"""
+    For several years in a row, New York has been given the dubious honor of being in the top three “Rattiest” cities in the United States, as ranked by Orkin, a national pest control service. New York has also been crowned the "Worst Rat City in the World" by Animal Planet in 2014, and "USA's No. 1 Pestropolis” by rodentologist Bobby Corrigan.
+
+New Yorkers have always been forced to coexist with rats. However, the rat problem has grown steadily over time all across the city, especially in Brooklyn and Manhattan, thus increasing their visibility and worrying residents.
+
+> “So many rats regularly lurk on a sidewalk in Brooklyn that it is the humans who avoid the rats, not the other way around.” - Winne Chan, New York Times.
+"""
+)
+
+h2("Basic Information About Rats")
+
+st.write(
     """
-        Rats are as synonymous with New York City as trains, the Empire State Building, and expensive apartments. There is even a [Wikipedia page dedicated to Rats in New York City](https://en.wikipedia.org/wiki/Rats_in_New_York_City). While cute and furry creatures, rats are also disease vectors (not that we need more of those right now). The City even went so far as to make a [$32 million plan](https://www.nytimes.com/2017/07/12/nyregion/new-york-city-rat-problem.html) to control the rodent problem.
-        According to [NYC Open Data](https://data.cityofnewyork.us/Social-Services/Rat-Sightings/3q43-55fe) the number of reports of rat sightings has been on an upward trend.
+The city’s rat population is dominated by the brown rat, also known as the Norway rat, the sewer rat, and the alley rat. The species is believed to have originated in East Asia, eventually migrating to Europe. The rats we see around the city today are descendants of those that came from Western Europe in the 1700s. Once the Norway rats arrived in NYC, they quickly killed off the smaller roof rats that inhabited the city, and they’ve continued thriving to this day. 
+
+Rats are nocturnal and usually stay within 450 feet of their burrows, which are often in apartment floorboards, alleyways, vegetation, sidewalks or basements. Rats tend to look for places that provide them with food, water, shelter and safe ways for them to get around. 
+
+They live in colonies of around 40–50 members and can be seen travelling in herds, passing
+down successful feeding paths to younger generations. Solitary rats, especially those found during the day, have often been displaced from their burrows.
+
+Rats are athletes and survivors! The adult rat can squeeze through holes or gaps 1 inch wide, jump a horizontal distance of up to 4 feet, survive a fall from a height of almost 40 feet, and tread water for three days.
+
+Like humans, NYC rats are highly intelligent, have daily routines, communicate with one another, and have their own social order. 
+
+> “A rat is so smart they notice when something new enters their environment and are highly suspicious. For example, older rats won’t eat a new food source. They’ll leave it out for the younger ones to see if they die from eating it. Only then will they venture out to try it.” - Bill Swan, rat specialist and co-owner of NYC Pest Control in Brooklyn.
+
+Try out the visualization below to get a visual primer to where rats are found, where they make their habitats, and their cultural status in NYC history. Scroll to zoom, drag to pan, and click to enter and exit group viewing mode. The images from the visualization were scraped from Google Images and Flickr’s Creative Commons images. Images are displayed by visual similarity and were hand-labeled with general categories.
+
         """
 )
 components.iframe("https://connie.dog/rat-image-tsne/", width=700, height=1000)
@@ -27,6 +63,86 @@ st.write(
     unsafe_allow_html=True,
 )
 
+h2("Rat Diseases")
+
+st.write(
+    """
+Rats can spread disease and contaminate food sources. Leptospirosis, a bacterial infection spread by rat urine, killed one and sickened others in the Bronx in 2017. 
+
+A survey conducted in 2014 studied 133 brown rats from residential buildings in Manhattan. While at least 18 of the viruses found are known to cause disease in humans, it is unclear how infectious the rats are to residents.
+
+Peter Daszak, president of EcoHealth Alliance, called the study "shocking and surprising" and "a recipe for a public health nightmare"
+"""
+)
+
+st.write(
+    """
+<table>
+<tr><th>Fleas</th><td><table>
+    <tr><td>Bubonic plague</td></tr>
+    <tr><td>Typhus</td></tr>
+    <tr><td>Spotted Fever</td></tr>
+</table></td></tr>
+<tr><th>Bacteria</th><td><table>
+    <tr><td>E. coli</td></tr>
+    <tr><td>Clostridium difficile</td></tr>
+    <tr><td>Salmonella</td></tr>
+</table></td></tr>
+<tr><th>Viral</th><td><table>
+    <tr><td>Rat-bite fever</td></tr>
+    <tr><td>Tetanus from a bite</td></tr>
+    <tr><td>Hemorrhagic fever by Seoul hantavirus</td></tr>
+    <tr><td>sapoviruses</td></tr>
+    <tr><td>cardioviruses</td></tr>
+    <tr><td>kobuviruses</td></tr>
+    <tr><td>parechoviruses</td></tr>
+    <tr><td>rotaviruses</td></tr>
+    <tr><td>hepaciviruses</td></tr>
+</table></td></tr>
+</table>
+""",
+    unsafe_allow_html=True,
+)
+
+h2("Additional Rat Problems")
+st.write(
+    """
+* Gnawing and burrowing can cause structural damage.
+* They have attacked homeless people, eaten cadavers in the city morgue, and bitten infants and young children to get food off their faces. 
+*Rats have chewed clean through car engine wires.
+"""
+)
+
+h2("Respect for Rats?")
+
+st.write(
+    """
+Despite the overwhelming dislike for rats, some of those who study them, fight them, or encounter them often have developed a begrudging respect for the little creatures.
+
+Graduate student Matthew Combs has come to respect the enemy after studying them for so long: “They are, quote-unquote, vermin, and definitely pests we need to get rid of,” he says, “but they are extraordinary in their own ways.” 
+
+Ex-Manhattan Borough President Scott Stringer joked in 2013, "The rats don't scurry. They walk right up to you and say, 'How are you, Mr. Borough President?'”  
+
+An anonymous woman who offers an online rat-killing gift service told the Guardian: “I don’t have it out for rats. I think they’re pretty impressive. There’s just too many of them.”
+
+Mike Deutsch, a veteran rat-catcher at the New York-based Arrow Exterminating Company, said he has developed “a relationship with rats.”
+> “They are an incredible animal, I admire their ability to adapt to different situations,” he said. “I look at them as a tremendous success.”
+
+"""
+)
+
+h2("Internet Fame")
+st.write(
+    """
+NYC rats have found  success online, making the “NYC rat” a meme and lesser cultural icon.
+In 2011, a video of a rat climbing on a sleeping man's face on the subway went viral.
+In 2015, a YouTube video of a rat carrying a slice of pizza in the subway went viral and garnered 5 million views within two days, and spawned similar staged videos with trained rats such as Selfie Rat.
+In early 2016, another video of a rat climbing on a sleeping subway rider was uploaded to social media. That year, YouTube videos of rats on subway tracks and in a subway car in New York City went viral, as did videos of rats in a Dunkin' Donuts in Manhattan.
+
+Individual reactions to NYC rats can be explored using the visualization below, which displays the results of sentiment analysis and keyword extraction of all Reddit comments on posts related to rats in New York.
+
+"""
+)
 
 domain = ["Positive", "Negative", "Neutral"]
 range_ = ["#33BB44", "#BB2233", "#9999AA"]
@@ -205,6 +321,9 @@ md = reload()
 
 st.markdown(md, unsafe_allow_html=True)
 
+
+h2("How Widespread and Why?")
+
 # Using URLs for df > 5k rows
 rats_url = (
     "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/master/rats.csv"
@@ -258,6 +377,29 @@ map_bg = (
 
 st.write(chart & (map_bg + chart2))
 
+st.write(
+    """
+There’s an urban myth that there are more rats than people in the five boroughs of New York City (8.4 million in 2020). Public health officials have not developed any reliable way to estimate their actual population numbers. However, a 2014 study by Jonathan Auerbach, which was reported in the Royal Statistical Society's Significance magazine, estimated that there were closer to 2 million rats in the city. 
+
+Rats have an extremely high rate of reproduction, mating up to 20 times in 6 hours. A female rat
+produces 4–7 litters of around 10 rats each year. Studies indicate New York is particularly well-suited for rats due to sanitation practices, climate, housing construction standards and more. Warmer weather due to climate change makes for longer mating seasons and an increase in rat populations. 
+
+Rats primarily find food at human habitations, such as in the trash. A contributing factor to the rat population is how the city collects trash: bags are left outside overnight before pick up the next morning.
+
+> “It’s just an all-night buffet for the rats,” Jason Munshi-South, a biology professor at Fordham University said. 
+
+"""
+)
+
+# df_trash = df_trash.groupby("BOROUGH").count().reset_index()
+# chart = (
+#    alt.Chart(nyc_geojson)
+#    .mark_geoshape(color="count(BOROUGH):Q")
+#    .transform_lookup(
+#        lookup="BOROUGH", from_=alt.LookupData(trash_url, key="BOROUGH")
+#    )
+# )
+# st.write(chart)
 
 df_budget_raw = pd.read_csv(budget_url)
 df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
