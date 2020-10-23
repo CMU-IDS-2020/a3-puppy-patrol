@@ -11,9 +11,10 @@ font_fam = "Merriweather"
 font_accent_color = "#175BC2"
 
 st.write(
-    "<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>",
+    """<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>""",
     unsafe_allow_html=True,
 )
+
 
 def h2(s: str):
     st.markdown(
@@ -23,15 +24,15 @@ def h2(s: str):
         unsafe_allow_html=True,
     )
 
+
 def h3(s: str):
     st.markdown(
         f"""
-    <h3 style="font-family: {font_fam}; margin-top: 12
-
-    px; font-weight: 600; font-style: italic; font-size: 24px;">{s.title()}</h2>
+    <h3 style="font-family: {font_fam}; margin-top: 12px; font-weight: 600; font-style: italic; font-size: 24px;">{s.title()}</h2>
     """,
         unsafe_allow_html=True,
     )
+
 
 def instructions(s: str):
     st.markdown(
@@ -40,6 +41,7 @@ def instructions(s: str):
     """,
         unsafe_allow_html=True,
     )
+
 
 st.markdown(
     f"""
@@ -79,7 +81,9 @@ Like humans, NYC rats are highly intelligent, have daily routines, communicate w
         """
 )
 
-instructions("Try out the visualization below to get a visual primer to where rats are found, where they make their habitats, and their cultural status in NYC history. Pinch (preferred) or scroll to zoom, drag to pan, and click to enter and exit group viewing mode. The images from the visualization were scraped from Google Images and Flickr’s Creative Commons images. Images are displayed by visual similarity and were hand-labeled with general categories")
+instructions(
+    "Try out the visualization below to get a visual primer to where rats are found, where they make their habitats, and their cultural status in NYC history. Pinch (preferred) or scroll to zoom, drag to pan, and click to enter and exit group viewing mode. The images from the visualization were scraped from Google Images and Flickr’s Creative Commons images. Images are displayed by visual similarity and were hand-labeled with general categories"
+)
 
 components.iframe("https://connie.dog/rat-image-tsne/", width=700, height=800)
 
@@ -166,7 +170,9 @@ In early 2016, another video of a rat climbing on a sleeping subway rider was up
 """
 )
 
-instructions("Individual reactions to NYC rats can be explored using the visualization below, which displays the results of sentiment analysis and keyword extraction of all Reddit comments on posts related to rats in New York.")
+instructions(
+    "Individual reactions to NYC rats can be explored using the visualization below, which displays the results of sentiment analysis and keyword extraction of all Reddit comments on posts related to rats in New York."
+)
 
 domain = ["Positive", "Negative", "Neutral"]
 range_ = ["#33BB44", "#BB2233", "#9999AA"]
@@ -391,9 +397,7 @@ Rats primarily find food at human habitations, such as in the trash. A contribut
 """
 )
 
-<<<<<<< HEAD
 df_trash = pd.read_csv(trash_url).groupby("BOROUGH").sum().reset_index()
-=======
 # df_trash = df_trash.groupby("BOROUGH").count().reset_index()
 # chart = (
 #    alt.Chart(nyc_geojson)
@@ -405,7 +409,8 @@ df_trash = pd.read_csv(trash_url).groupby("BOROUGH").sum().reset_index()
 # st.write(chart)
 
 h2("How NYC Combats the Rat Population")
-st.markdown("""
+st.markdown(
+    """
     Commonly NYC gov and exterminator suggested maintenance measures: 
 - Rodent baiting
 - Proper storage of garbage
@@ -424,14 +429,14 @@ The New York City Department of Health handles enforcement of rat infestation pr
 - Property owners that fail inspections receive a Commissioner's Order and have five days to correct the problem. If, after five days, the property fails a second inspection, the owner receives a Notice of Violation and can be fined. 
 - Waste management in problem neighborhoods and buildings, 
 - New York City publishes a guide for property owners and tenants, entitled Preventing Rats on Your Property: A Guide for Property Owners and Tenants 
-""")
+"""
+)
 
 df_budget_raw = pd.read_csv(budget_url)
 df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
 df_budget["year"] = df_budget["Fiscal Year"].apply(lambda d: f"{d}-01-01")
 chw = 275
 
->>>>>>> 7f379a54f90c8213dd60cfd99a13ddcf7992ba4b
 chart = (
     (
         alt.Chart(nyc_geojson)
@@ -486,7 +491,6 @@ st.write(
     unsafe_allow_html=True,
 )
 
-<<<<<<< HEAD
 st.write(
     """
 * Working: $32 million allocation in 2017 is WORKING
@@ -499,14 +503,17 @@ st.write(
 * What’s not working: Cats (rats simply avoid cats, and cats are inclined to attack easier prey like birds)
 
 Suggestions tldr: keep doing what you’re doing - increase sanitation and inspections 
-=======
-st.write(chart + chart2)
+"""
+)
 
-st.write("Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures.")
+st.write(
+    "Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures."
+)
 instructions("Some of these efforts can be seen in this visualization below.")
 
 
-st.markdown("""
+st.markdown(
+    """
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -539,31 +546,30 @@ st.markdown("""
   </tr>
 </tbody>
 </table>
-""", unsafe_allow_html = True)
+""",
+    unsafe_allow_html=True,
+)
 
 h3("End Summary")
 
-st.markdown("""
+st.markdown(
+    """
 The data shows that NYC residents find dark humor in the prevalence of and size of rats but would love to see them gone. The problem is widespread all across the city, but trends towards Brooklen and Manhattan, which are also hotspots for trash output. 
 
 However, optimistically, the data shows that De Blasio's $32 million plan is correlated with a decrease in rat sightings! NYC should keep doing what it's been doing in the past few years.
->>>>>>> 7f379a54f90c8213dd60cfd99a13ddcf7992ba4b
 
 Although rats have become part of the fabric of NYC’s environment and have unprecedented levels of internet fame, most New Yorkers would be glad to see them go. However, this is still an ongoing war with no end in sight, and rats are a formidable enemy.
 
 > “It’s a never-ending battle, but it’s the right thing to do,” said Joseph J. Lhota, former deputy mayor and rat czar, “Never, never, never give up… People are disgusted by rats.”
-<<<<<<< HEAD
 """
 )
-=======
-""")
 
 h3("Data sources")
-st.markdown("""
+st.markdown(
+    """
 - NYC Open Data
 - Google Images and Flickr
 - Reddit
 - Wikipedia, New York Times, New York Pest Control, and The Guardian for information about rats
-""")
-
->>>>>>> 7f379a54f90c8213dd60cfd99a13ddcf7992ba4b
+"""
+)
