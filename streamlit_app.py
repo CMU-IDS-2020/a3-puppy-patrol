@@ -379,7 +379,7 @@ trash_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/mast
 
 df = pd.read_csv(rats_url)
 
-
+instructions("Brush across the timeline to see how rat sightings are distributed around New York City over time.")
 st.write(
     """
 <iframe width="100%" height="849" frameborder="0"
