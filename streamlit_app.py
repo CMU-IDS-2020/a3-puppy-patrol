@@ -396,42 +396,8 @@ Rats primarily find food at human habitations, such as in the trash. A contribut
 
 """
 )
-
+instructions("See below for a mapping of trash per borough. From this visualization we notice that trash hotspots are similar to rat hotspots. Notably, there's a greater magnitude of trash and rats in Brooklyn and Manhattan, and less in Staten Island.")
 df_trash = pd.read_csv(trash_url).groupby("BOROUGH").sum().reset_index()
-# df_trash = df_trash.groupby("BOROUGH").count().reset_index()
-# chart = (
-#    alt.Chart(nyc_geojson)
-#    .mark_geoshape(color="count(BOROUGH):Q")
-#    .transform_lookup(
-#        lookup="BOROUGH", from_=alt.LookupData(trash_url, key="BOROUGH")
-#    )
-# )
-# st.write(chart)
-
-h2("How NYC Combats the Rat Population")
-st.markdown(
-    """
-    Commonly NYC gov and exterminator suggested maintenance measures: 
-- Rodent baiting
-- Proper storage of garbage
-- Removal of water sources
-- Elimination of environments suitable for nesting
-- Metal garbage cans rather than plastic ones
-- Garbage should be placed out on the street close to the pickup time, rather than the night before.
-- Landscaped areas around property should be kept free of tall weeds and trim shrubs that are close to the ground.
-- Fix cracks or holes in the foundation of your building.
-- Do not litter and do not feed birds or other wildlife.
-- Call 311 or fill out NYC Rat Sighting Report online, which are are investigated by the Health Department.
-
-The New York City Department of Health handles enforcement of rat infestation problems in New York City. Even those tasked with killing rats recognize they will never be eliminated. The approach has traditionally been reactive: after receiving complaints of infestation, officials would place rodent poison, traps, or contraceptives. In recent years, the city has adopted a more proactive approach to rodent control known as integrated pest management, which focuses on preventive measures. Here are a few existing ongoing legal measures:
-
-- Under the city’s building code, developers are required to hire a licensed exterminator for any site where a building is being demolished. But there is no similar rule for new developments.
-- Property owners that fail inspections receive a Commissioner's Order and have five days to correct the problem. If, after five days, the property fails a second inspection, the owner receives a Notice of Violation and can be fined. 
-- Waste management in problem neighborhoods and buildings, 
-- New York City publishes a guide for property owners and tenants, entitled Preventing Rats on Your Property: A Guide for Property Owners and Tenants 
-"""
-)
-
 df_budget_raw = pd.read_csv(budget_url)
 df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
 df_budget["year"] = df_budget["Fiscal Year"].apply(lambda d: f"{d}-01-01")
@@ -453,37 +419,35 @@ chart = (
 )
 st.write(chart)
 
-
-h2("Solution?")
-st.write(
+h2("How NYC Combats the Rat Population")
+st.markdown(
     """
-How NYC Combats the Rat Population
-
-Commonly NYC gov and exterminator suggested maintenance measures: 
-* Rodent baiting
-* Proper storage of garbage
-* Removal of water sources
-* Elimination of environments suitable for nesting
-* Garbage cans need to be rat-resistant and made out of metal rather than plastic which rats easily chew through plastic, 
-* Garbage should be placed out on the street close to the pickup time, rather than the night before.
-* Landscaped areas around property should be kept free of tall weeds and trim shrubs that are close to the ground.
-* Check for cracks or holes in the foundation of your building, sidewalk and under doors and repair them by filling and sealing them.
-* Do not litter and do not feed birds or other wildlife.
-* Call 311 or fill out NYC Rat Sighting Report online, which are are investigated by the Health Department.
+    Commonly NYC gov and exterminator suggested maintenance measures are: 
+- Rodent baiting
+- Proper storage of garbage
+- Removal of water sources
+- Elimination of environments suitable for nesting
+- Metal garbage cans rather than plastic ones
+- Garbage should be placed out on the street close to the pickup time, rather than the night before.
+- Landscaped areas around property should be kept free of tall weeds and trim shrubs that are close to the ground.
+- Fix cracks or holes in the foundation of your building.
+- Do not litter and do not feed birds or other wildlife.
+- Call 311 or fill out NYC Rat Sighting Report online, which are are investigated by the Health Department.
 
 The New York City Department of Health handles enforcement of rat infestation problems in New York City. Even those tasked with killing rats recognize they will never be eliminated. The approach has traditionally been reactive: after receiving complaints of infestation, officials would place rodent poison, traps, or contraceptives. In recent years, the city has adopted a more proactive approach to rodent control known as integrated pest management, which focuses on preventive measures. Here are a few existing ongoing legal measures:
 
-* Under the city’s building code, developers are required to hire a licensed exterminator for any site where a building is being demolished. But there is no similar rule for new developments.
-* Property owners that fail inspections receive a Commissioner's Order and have five days to correct the problem. If, after five days, the property fails a second inspection, the owner receives a Notice of Violation and can be fined. 
-* Waste management in problem neighborhoods and buildings, 
-* New York City publishes a guide for property owners and tenants, entitled Preventing Rats on Your Property: A Guide for Property Owners and Tenants
-
-Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures. Some of these efforts can be seen in this visualization below.
-
+- Under the city’s building code, developers are required to hire a licensed exterminator for any site where a building is being demolished. But there is no similar rule for new developments.
+- Property owners that fail inspections receive a Commissioner's Order and have five days to correct the problem. If, after five days, the property fails a second inspection, the owner receives a Notice of Violation and can be fined. 
+- Waste management in problem neighborhoods and buildings, 
+- New York City publishes a guide for property owners and tenants, entitled Preventing Rats on Your Property: A Guide for Property Owners and Tenants 
 """
 )
 
-instructions("Hover over a dot to see the policy and it's description!")
+st.write(
+    "Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures."
+)
+
+instructions("Some of these efforts can be seen in this visualization below. Hover over a dot to see the policy and it's description!")
 
 st.write(
     """
@@ -492,26 +456,6 @@ st.write(
 """,
     unsafe_allow_html=True,
 )
-
-st.write(
-    """
-* Working: $32 million allocation in 2017 is WORKING
-    * Covering dirt floors at scores of public housing buildings
-    * Deploying 336 new rat-proof garbage bins that compact trash using solar power and cost $7,000 a piece. 
-    * It also calls for the City Council to pass legislation requiring medium and large buildings in the targeted areas to put out their trash for pickup early in the morning, ridding sidewalks of the overnight trash mounds that attract vermin.
-    * And it includes a new process to kill rats in their burrows using dry ice, a method only recently approved by the Environmental Protection Agency and tested to promising effect in some areas of the city last year.
-* Working: Rat reservoir program - more inspections
-* What’s not working: birth control for rats (Rats are hard to kill. They avoid new objects introduced to their environment. They generally avoid traps and can smell poison, avoiding bait unless other food sources are unavailable.)
-* What’s not working: Cats (rats simply avoid cats, and cats are inclined to attack easier prey like birds)
-
-Suggestions tldr: keep doing what you’re doing - increase sanitation and inspections 
-"""
-)
-
-st.write(
-    "Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures."
-)
-instructions("Some of these efforts can be seen in this visualization below.")
 
 
 st.markdown(
