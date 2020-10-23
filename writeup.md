@@ -2,7 +2,7 @@
 
 # Aww Rats!🐀
 
-![screenshot.png](screenshot.png)
+![screenshot.png](screenshot.gif)
 
 New York has a unique relationship with rats. Rodents have become a symbol of the city as much as the Empire State Building or the Status of Liberty. Part of this association is due to New York's very real rodent problem. In this application, we explore data from a variety of sources, including NYC Open Data, Wikipedia, and Reddit to get a better understanding New York's unique relationship with rats, and what they are doing about it.
 
@@ -35,8 +35,6 @@ The t-SNE also has an important role in the application. New York is a wildly ve
 
 ## Development
 
-TODO: **An overview of your development process.** Describe how the work was split among the team members. Include a commentary on the development process, including answers to the following questions: Roughly how much time did you spend developing your application (in people-hours)? What aspects took the most time?
-
 We split the work up as so:
 ![tasks](writeup_assets/task.png)
 
@@ -54,4 +52,49 @@ Connie originally planned to use machine learning to create rat location predict
 ![tasks](writeup_assets/cartogram.png)
 She started by reading about Tensorflow agents and custom reinforcement training environments. She was able to get all of the core tech working and trained an agent to travel from point A, encoded as (x1, y1), to point B, encoded as (x2, y2) on a 10 by 10 grid within 100 steps with a high success rate. However, when she increased the size of the grid to the dimensions of the rat grid, which was roughly 300 by 50, the training took a incredibly long time and didn't look like it would be successful. Here's a graph of the average returns of one training session (10,000 iterations, batch size 64).
 ![tasks](writeup_assets/returns_over_time.png)
+
+After doing so much research into rats in NYC, Connie realized that no matter how much text she wrote about all of her learnings, it would be hard for the reader to truly grasp the NYC resident's experience without seeing it through their eyes. She scraped Google Images and Flickr for "NYC rat" images, and manually assigned general categories to all of them. By gathering and showing images, viewers would be able to see the rats in context and understand what a "rat sighting" might look like and where they might happen. For the TSNE, she first extracted features used the pretrained imagenet, and then used TSNE to graph it. After assigning labels by hand, she realized that she wanted the images to also be closer to other members of their hand-labeled group. Thus, she used PCA on the imagenet extracted features to reduce that to about 80 features, and then concatenated those features with her own feature values. 
+
+Here's the TSNE based only on imagenet features:
+![tasks](writeup_assets/full_features.png)
+
+Here's the TSNE based on only the hand-labeled values that Connie assigned:
+![tasks](writeup_assets/cluster.png)
+
+The final visualization is based on a mix of the two.
+
+Connie created the interactive TSNE visualization using plain Javascript, and then embeded the final result into streamlit as an iframe. At first, using the constantly-refreshing canvas element with so many elements caused the app to lag after a few interactions. So as an optimization, Connie created canvases for every possible hover state when the app was created, and just used the mouse interactions to trigger the drawing of the premade canvases. This fixed the lagging problem.
+
+For the Reddit sentiment visualization, Connie first used the Reddit API to scrape thousands of comments from posts that matched the "NYC rats" query. She then hand-cleaned the data, removing posts that had matched the query but weren't actually about NYC rats. At the end, she left comments that were on posts with "rats" in the title, or comments that were on posts about NYC and had rats in the comment body. This left roughly 5000 comments. She then used the NLTK Natural Language Processing library to extract sentiment from the comments. She also used it to tokenize the comments, and then gathered the most popular keywords, bigrams, and trigrams in the comments. She found that the bigrams were the unique accross different sentiments, so she used those as suggested keyword filters for her final visualization. 
+
+Here's the generated word cloud for all comments.
+
+![tasks](writeup_assets/rat_keywords.png)
+
+Here's the frequencies for all comments as unigrams, bigrams, or brigrams.
+
+![tasks](writeup_assets/keyword_frequency.png)
+
+Here's the frequencies for all comments as unigrams, bigrams, or brigrams.
+
+![tasks](writeup_assets/keyword_bigram.png)
+
+Here's the frequencies for all comments as unigrams, bigrams, or brigrams.
+
+![tasks](writeup_assets/keyword_trigram.png)
+
+Finally, here's a wordcloud of keywords for each of the sentiments.
+
+Positive sentiment:
+
+![tasks](writeup_assets/positive_wordcloud.png)
+
+Negative sentiment:
+
+![tasks](writeup_assets/negative_wordcloud.png)
+
+Neutral sentiment:
+
+![tasks](writeup_assets/neutral_wordcloud.png)
+
 
