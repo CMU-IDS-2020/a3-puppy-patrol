@@ -11,7 +11,9 @@ font_fam = "Merriweather"
 font_accent_color = "#175BC2"
 
 st.write(
-   "<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>",
+    "<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:"
+    + font_accent_color
+    + ";} </style>",
     unsafe_allow_html=True,
 )
 
@@ -375,7 +377,9 @@ trash_url = "https://raw.githubusercontent.com/CMU-IDS-2020/a3-puppy-patrol/mast
 
 df = pd.read_csv(rats_url)
 
-instructions("Brush across the timeline to see how rat sightings are distributed around New York City over time.")
+instructions(
+    "Brush across the timeline to see how rat sightings are distributed around New York City over time."
+)
 st.write(
     """
 <iframe width="100%" height="849" frameborder="0"
@@ -478,6 +482,8 @@ Mayors will often wage a “war on rats” and occasionally enact more drastic p
 
 """
 )
+
+instruction("Hover over a dot to see the policy and it's description!")
 
 st.write(
     """
