@@ -26,7 +26,9 @@ def h2(s: str):
 def h3(s: str):
     st.markdown(
         f"""
-    <h3 style="font-family: {font_fam}; margin-top: 12px; font-weight: 600; font-style: italic; font-size: 24px;">{s.title()}</h2>
+    <h3 style="font-family: {font_fam}; margin-top: 12
+
+    px; font-weight: 600; font-style: italic; font-size: 24px;">{s.title()}</h2>
     """,
         unsafe_allow_html=True,
     )
@@ -549,5 +551,13 @@ However, optimistically, the data shows that De Blasio's $32 million plan is cor
 Although rats have become part of the fabric of NYC’s environment and have unprecedented levels of internet fame, most New Yorkers would be glad to see them go. However, this is still an ongoing war with no end in sight, and rats are a formidable enemy.
 
 > “It’s a never-ending battle, but it’s the right thing to do,” said Joseph J. Lhota, former deputy mayor and rat czar, “Never, never, never give up… People are disgusted by rats.”
+""")
+
+h3("Data sources")
+st.markdown("""
+- NYC Open Data
+- Google Images and Flickr
+- Reddit
+- Wikipedia, New York Times, New York Pest Control, and The Guardian for information about rats
 """)
 
