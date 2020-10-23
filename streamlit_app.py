@@ -7,21 +7,41 @@ import streamlit as st
 from datetime import datetime
 import streamlit.components.v1 as components
 
-font_fam = "serif"
+font_fam = "Merriweather"
+font_accent_color = "#175BC2"
 
+st.write(
+    "<style>@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap'); div.Widget.row-widget.stRadio > div{flex-direction:row;} blockquote{font-size: 18px !important; font-weight: 700; font-family: Merriweather; color:" + font_accent_color + ";} </style>",
+    unsafe_allow_html=True,
+)
 
 def h2(s: str):
     st.markdown(
         f"""
-    <h2 style="font-family: {font_fam};">{s.title()}</h2>
+    <h2 style="font-family: {font_fam}; font-weight: 600; font-size: 30px;">{s.title()}</h2>
     """,
         unsafe_allow_html=True,
     )
 
+def h3(s: str):
+    st.markdown(
+        f"""
+    <h3 style="font-family: {font_fam}; margin-top: 12px; font-weight: 600; font-style: italic; font-size: 24px;">{s.title()}</h2>
+    """,
+        unsafe_allow_html=True,
+    )
+
+def instructions(s: str):
+    st.markdown(
+        f"""
+    <p style="font-weight: 600; font-style: italic; color: rgba(0, 0, 0, 0.65)">{s}</p>
+    """,
+        unsafe_allow_html=True,
+    )
 
 st.markdown(
     f"""
-        <h1 style="font-family: {font_fam};">Aww Rats!🐀</h1>
+        <h1 style="font-family: {font_fam}; font-weight: 900; font-size: 48px;">Aww Rats! What's up with the rat problem in NYC? 🐀 </h1>
         """,
     unsafe_allow_html=True,
 )
@@ -31,11 +51,13 @@ st.write(
 
 New Yorkers have always been forced to coexist with rats. However, the rat problem has grown steadily over time all across the city, especially in Brooklyn and Manhattan, thus increasing their visibility and worrying residents.
 
-> “So many rats regularly lurk on a sidewalk in Brooklyn that it is the humans who avoid the rats, not the other way around.” - Winne Chan, New York Times.
+> “So many rats regularly lurk on a sidewalk in Brooklyn that it is the humans who avoid the rats, not the other way around.” - Winne Hu, New York Times.
+
+Through this article, we will investigate all aspects of the rat problem in NYC, looking at both qualatative data and quantative data. We will introduce the rat problem, investigate how people are reacting to it, how widespread it is, and finally end on what policies the city government has taken to fight it.
 """
 )
 
-h2("Basic Information About Rats")
+h2("About NYC rats")
 
 st.write(
     """
@@ -52,18 +74,15 @@ Like humans, NYC rats are highly intelligent, have daily routines, communicate w
 
 > “A rat is so smart they notice when something new enters their environment and are highly suspicious. For example, older rats won’t eat a new food source. They’ll leave it out for the younger ones to see if they die from eating it. Only then will they venture out to try it.” - Bill Swan, rat specialist and co-owner of NYC Pest Control in Brooklyn.
 
-Try out the visualization below to get a visual primer to where rats are found, where they make their habitats, and their cultural status in NYC history. Scroll to zoom, drag to pan, and click to enter and exit group viewing mode. The images from the visualization were scraped from Google Images and Flickr’s Creative Commons images. Images are displayed by visual similarity and were hand-labeled with general categories.
-
         """
 )
-components.iframe("https://connie.dog/rat-image-tsne/", width=700, height=1000)
 
-st.write(
-    "<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>",
-    unsafe_allow_html=True,
-)
+instructions("Try out the visualization below to get a visual primer to where rats are found, where they make their habitats, and their cultural status in NYC history. Pinch (preferred) or scroll to zoom, drag to pan, and click to enter and exit group viewing mode. The images from the visualization were scraped from Google Images and Flickr’s Creative Commons images. Images are displayed by visual similarity and were hand-labeled with general categories")
 
-h2("Rat Diseases")
+components.iframe("https://connie.dog/rat-image-tsne/", width=700, height=800)
+
+
+h3("Rat problems")
 
 st.write(
     """
@@ -104,26 +123,29 @@ st.write(
     unsafe_allow_html=True,
 )
 
-h2("Additional Rat Problems")
 st.write(
     """
+\nRats aren't just a source of disease. They've also been known to wreck havoc in other ways, such as:
 * Gnawing and burrowing can cause structural damage.
 * They have attacked homeless people, eaten cadavers in the city morgue, and bitten infants and young children to get food off their faces. 
 *Rats have chewed clean through car engine wires.
 """
 )
 
-h2("Respect for Rats?")
+h3("Respect for Rats?")
 
 st.write(
     """
 Despite the overwhelming dislike for rats, some of those who study them, fight them, or encounter them often have developed a begrudging respect for the little creatures.
 
-Graduate student Matthew Combs has come to respect the enemy after studying them for so long: “They are, quote-unquote, vermin, and definitely pests we need to get rid of,” he says, “but they are extraordinary in their own ways.” 
+Graduate student Matthew Combs has come to respect the enemy after studying them for so long: 
+> “They are, quote-unquote, vermin, and definitely pests we need to get rid of,” he says, “but they are extraordinary in their own ways.” 
 
-Ex-Manhattan Borough President Scott Stringer joked in 2013, "The rats don't scurry. They walk right up to you and say, 'How are you, Mr. Borough President?'”  
+Ex-Manhattan Borough President Scott Stringer joked in 2013, 
+> "The rats don't scurry. They walk right up to you and say, 'How are you, Mr. Borough President?'”  
 
-An anonymous woman who offers an online rat-killing gift service told the Guardian: “I don’t have it out for rats. I think they’re pretty impressive. There’s just too many of them.”
+An anonymous woman who offers an online rat-killing gift service told the Guardian: 
+> “I don’t have it out for rats. I think they’re pretty impressive. There’s just too many of them.”
 
 Mike Deutsch, a veteran rat-catcher at the New York-based Arrow Exterminating Company, said he has developed “a relationship with rats.”
 > “They are an incredible animal, I admire their ability to adapt to different situations,” he said. “I look at them as a tremendous success.”
@@ -131,7 +153,7 @@ Mike Deutsch, a veteran rat-catcher at the New York-based Arrow Exterminating Co
 """
 )
 
-h2("Internet Fame")
+h3("Internet Fame")
 st.write(
     """
 NYC rats have found  success online, making the “NYC rat” a meme and lesser cultural icon.
@@ -139,10 +161,10 @@ In 2011, a video of a rat climbing on a sleeping man's face on the subway went v
 In 2015, a YouTube video of a rat carrying a slice of pizza in the subway went viral and garnered 5 million views within two days, and spawned similar staged videos with trained rats such as Selfie Rat.
 In early 2016, another video of a rat climbing on a sleeping subway rider was uploaded to social media. That year, YouTube videos of rats on subway tracks and in a subway car in New York City went viral, as did videos of rats in a Dunkin' Donuts in Manhattan.
 
-Individual reactions to NYC rats can be explored using the visualization below, which displays the results of sentiment analysis and keyword extraction of all Reddit comments on posts related to rats in New York.
-
 """
 )
+
+instructions("Individual reactions to NYC rats can be explored using the visualization below, which displays the results of sentiment analysis and keyword extraction of all Reddit comments on posts related to rats in New York.")
 
 domain = ["Positive", "Negative", "Neutral"]
 range_ = ["#33BB44", "#BB2233", "#9999AA"]
@@ -322,7 +344,15 @@ md = reload()
 st.markdown(md, unsafe_allow_html=True)
 
 
-h2("How Widespread and Why?")
+h2("How widespread is the rat problem and Why?")
+
+st.write(
+    """
+There’s an urban myth that there are more rats than people in the five boroughs of New York City (8.4 million in 2020). Public health officials have not developed any reliable way to estimate their actual population numbers. However, a 2014 study by Jonathan Auerbach, which was reported in the Royal Statistical Society's Significance magazine, estimated that there were closer to 2 million rats in the city. 
+
+Rats have an extremely high rate of reproduction, mating up to 20 times in 6 hours. A female rat
+produces 4–7 litters of around 10 rats each year. Studies indicate New York is particularly well-suited for rats due to sanitation practices, climate, housing construction standards and more. Warmer weather due to climate change makes for longer mating seasons and an increase in rat populations. """
+)
 
 # Using URLs for df > 5k rows
 rats_url = (
@@ -379,11 +409,6 @@ st.write(chart & (map_bg + chart2))
 
 st.write(
     """
-There’s an urban myth that there are more rats than people in the five boroughs of New York City (8.4 million in 2020). Public health officials have not developed any reliable way to estimate their actual population numbers. However, a 2014 study by Jonathan Auerbach, which was reported in the Royal Statistical Society's Significance magazine, estimated that there were closer to 2 million rats in the city. 
-
-Rats have an extremely high rate of reproduction, mating up to 20 times in 6 hours. A female rat
-produces 4–7 litters of around 10 rats each year. Studies indicate New York is particularly well-suited for rats due to sanitation practices, climate, housing construction standards and more. Warmer weather due to climate change makes for longer mating seasons and an increase in rat populations. 
-
 Rats primarily find food at human habitations, such as in the trash. A contributing factor to the rat population is how the city collects trash: bags are left outside overnight before pick up the next morning.
 
 > “It’s just an all-night buffet for the rats,” Jason Munshi-South, a biology professor at Fordham University said. 
@@ -400,6 +425,28 @@ Rats primarily find food at human habitations, such as in the trash. A contribut
 #    )
 # )
 # st.write(chart)
+
+h2("How NYC Combats the Rat Population")
+st.markdown("""
+    Commonly NYC gov and exterminator suggested maintenance measures: 
+- Rodent baiting
+- Proper storage of garbage
+- Removal of water sources
+- Elimination of environments suitable for nesting
+- Metal garbage cans rather than plastic ones
+- Garbage should be placed out on the street close to the pickup time, rather than the night before.
+- Landscaped areas around property should be kept free of tall weeds and trim shrubs that are close to the ground.
+- Fix cracks or holes in the foundation of your building.
+- Do not litter and do not feed birds or other wildlife.
+- Call 311 or fill out NYC Rat Sighting Report online, which are are investigated by the Health Department.
+
+The New York City Department of Health handles enforcement of rat infestation problems in New York City. Even those tasked with killing rats recognize they will never be eliminated. The approach has traditionally been reactive: after receiving complaints of infestation, officials would place rodent poison, traps, or contraceptives. In recent years, the city has adopted a more proactive approach to rodent control known as integrated pest management, which focuses on preventive measures. Here are a few existing ongoing legal measures:
+
+- Under the city’s building code, developers are required to hire a licensed exterminator for any site where a building is being demolished. But there is no similar rule for new developments.
+- Property owners that fail inspections receive a Commissioner's Order and have five days to correct the problem. If, after five days, the property fails a second inspection, the owner receives a Notice of Violation and can be fined. 
+- Waste management in problem neighborhoods and buildings, 
+- New York City publishes a guide for property owners and tenants, entitled Preventing Rats on Your Property: A Guide for Property Owners and Tenants 
+""")
 
 df_budget_raw = pd.read_csv(budget_url)
 df_budget = df_budget_raw.groupby("Fiscal Year").mean().reset_index()
@@ -452,3 +499,55 @@ chart = (
 )
 
 st.write(chart + chart2)
+
+st.write("Mayors will often wage a “war on rats” and occasionally enact more drastic policy measures.")
+instructions("Some of these efforts can be seen in this visualization below.")
+
+
+st.markdown("""
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-h395{background-color:#ffeceb;text-align:left;vertical-align:top}
+.tg .tg-y4nm{background-color:#efffef;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 679px">
+<colgroup>
+<col style="width: 320px">
+<col style="width: 359px">
+</colgroup>
+<thead>
+  <tr>
+    <th class="tg-y4nm"><span style="font-weight:bold;color:#009901">What's working 👍</span></th>
+    <th class="tg-h395"><span style="font-weight:bold;color:#9A0000">What's not working  👎</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax">De Blasio's $32 million plan in 2017 that involved better garbage bins, <span style="font-weight:400;font-style:normal;text-decoration:none">covering dirt floors at public housing buildings, and introducing dry ice as a new way to kill rats. Our visualizations support this: at the beginning of this policy, our graph shows a strong decline in rat sightings.</span></td>
+    <td class="tg-0lax">Cats. Although some suggest introducing cats as a counterbalance to rats, 2018 research finds that contrary to popular opinion, cats are not good predators of rats. Rats actively avoid cats, and the researchers only recorded two rat kills in 79 days. The findings add to growing evidence that any benefit of using cats to control city rats is outweighed by the threat they pose to birds and other urban wildlife.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">The 2014 Rodent Reservoir Analysis program. Inspectors set bait for the rats, closed burrows, flushed sewers, and worked with the neighboring community on best practices, such as better trash management programs. Based on reports, the program has led to an 80% to 90% reduction in rodent sightings in the neighborhoods involved in the initiative.</td>
+    <td class="tg-0lax"><span style="font-weight:400;font-style:normal">The 2013 plan for mass sterilization of the city's rats, using a chemical to neutralize the reproductive systems of female rats. T</span><span style="font-weight:400;font-style:normal;text-decoration:none">his program was unsuccessful because rats avoid new objects introduced to their environment. They generally avoid traps and can smell poison, avoiding bait unless other food sources are unavailable.</span></td>
+  </tr>
+</tbody>
+</table>
+""", unsafe_allow_html = True)
+
+h3("End Summary")
+
+st.markdown("""
+The data shows that NYC residents find dark humor in the prevalence of and size of rats but would love to see them gone. The problem is widespread all across the city, but trends towards Brooklen and Manhattan, which are also hotspots for trash output. 
+
+However, optimistically, the data shows that De Blasio's $32 million plan is correlated with a decrease in rat sightings! NYC should keep doing what it's been doing in the past few years.
+
+Although rats have become part of the fabric of NYC’s environment and have unprecedented levels of internet fame, most New Yorkers would be glad to see them go. However, this is still an ongoing war with no end in sight, and rats are a formidable enemy.
+
+> “It’s a never-ending battle, but it’s the right thing to do,” said Joseph J. Lhota, former deputy mayor and rat czar, “Never, never, never give up… People are disgusted by rats.”
+""")
+
